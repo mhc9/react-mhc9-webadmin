@@ -45,11 +45,9 @@ export const authSlice = createSlice({
         [login.fulfilled]: (state, { payload }) => {
             if (payload) {
                 const { access_token } = payload;
-                // const decode = jwt(access_token);
 
                 localStorage.setItem("access_token", access_token);
 
-                // state.loggedInUser = decode.sub;
                 state.isLoggedIn = true;
                 state.success = true;
             }

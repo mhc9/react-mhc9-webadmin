@@ -8,7 +8,9 @@ const DefaultLayout = () => {
         <div>
             <Navbar />
 
-            <main><Outlet /></main>
+            <main className="min-h-[85vh]">
+                <Outlet />
+            </main>
 
             <Footer />
         </div>
