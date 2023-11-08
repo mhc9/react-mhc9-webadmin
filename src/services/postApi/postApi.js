@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const assetApi = createApi({
-    reducerPath: 'assetApi',
+export const postApi = createApi({
+    reducerPath: 'postApi',
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.REACT_APP_API_URL,
         prepareHeaders: (headers, { getState }) => {
@@ -17,10 +17,10 @@ export const assetApi = createApi({
     endpoints: (builder) => ({
         getInitialFormData: builder.query({
             query: () => ({
-                url: '/api/assets/init/form'
+                url: '/api/contents/init/form'
             }),
         }),
     }),
 });
 
-export const { useGetInitialFormDataQuery } = assetApi;
+export const { useGetInitialFormDataQuery } = postApi;
