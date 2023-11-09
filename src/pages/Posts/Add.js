@@ -8,13 +8,13 @@ const AddPost = () => {
             <div className="text-sm breadcrumbs">
                 <ul>
                     <li><a href="#">หน้าหลัก</a></li>
-                    <li>สร้างข่าวใหม่</li>
+                    <li>เนื้อหาใหม่</li>
                 </ul>
             </div>
 
             <div>
                 <div className="flex flex-row justify-between items-center mb-1">
-                    <h3 className="font-bold text-xl">สร้างข่าวใหม่</h3>
+                    <h3 className="font-bold text-xl">เนื้อหาใหม่</h3>
                 </div>
 
                 <div className="border rounded-lg px-3 pt-4">

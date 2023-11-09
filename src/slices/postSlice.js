@@ -12,7 +12,7 @@ const initialState = {
 
 export const getPosts = createAsyncThunk("post/getPosts", async (url, { rejectWithValue }) => {
     try {
-        const res = await api.post(url);
+        const res = await api.get(url);
     
         return res.data;
     } catch (error) {
@@ -22,7 +22,7 @@ export const getPosts = createAsyncThunk("post/getPosts", async (url, { rejectWi
 
 export const getPost = createAsyncThunk("post/getPost", async (id, { rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/posts/${id}`);
+        const res = await api.get(`/api/posts/${id}`);
     
         return res.data;
     } catch (error) {
