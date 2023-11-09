@@ -17,7 +17,7 @@ export const postApi = createApi({
     endpoints: (builder) => ({
         getInitialFormData: builder.query({
             query: () => ({
-                url: '/api/contents/init/form'
+                url: '/api/posts/init/form'
             }),
         }),
     }),
