@@ -46,6 +46,7 @@ const PostForm = () => {
                 publish_up: moment().format('YYYY-MM-DDTHH:mm:ss'),
                 publish_down: '',
                 tags: '',
+                urls: '',
             }}
             validationSchema={contentSchema}
             onSubmit={handleSubmit}
@@ -64,6 +65,9 @@ const PostForm = () => {
                                         onChange={formik.handleChange}
                                         className="input input-bordered w-full"
                                     />
+                                    {(formik.errors.title && formik.touched.title) && (
+                                        <span className="text-red-500">{formik.errors.title}</span>
+                                    )}
                                 </div>
                                 <div className="form-control mb-2">
                                     <label htmlFor="">เนื้อหาย่อ</label>
@@ -74,6 +78,9 @@ const PostForm = () => {
                                         onChange={formik.handleChange}
                                         className="input input-bordered w-full"
                                     />
+                                    {(formik.errors.intro_text && formik.touched.intro_text) && (
+                                        <span className="text-red-500">{formik.errors.intro_text}</span>
+                                    )}
                                 </div>
                                 <div className="form-control mb-2">
                                     <label htmlFor="">รายละเอียด</label>
@@ -121,6 +128,9 @@ const PostForm = () => {
                                             }
                                         }}
                                     />
+                                    {(formik.errors.publish_up && formik.touched.publish_up) && (
+                                        <span className="text-red-500">{formik.errors.publish_up}</span>
+                                    )}
                                 </div>
                                 <div className="form-control mb-2">
                                     <label htmlFor="">ประเภท</label>
@@ -139,6 +149,9 @@ const PostForm = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                    )}
+                                    {(formik.errors.category_id && formik.touched.category_id) && (
+                                        <span className="text-red-500">{formik.errors.category_id}</span>
                                     )}
                                 </div>
                                 <div className="form-control mb-2">
@@ -159,6 +172,9 @@ const PostForm = () => {
                                             ))}
                                         </select>
                                     )}
+                                    {(formik.errors.author_id && formik.touched.author_id) && (
+                                        <span className="text-red-500">{formik.errors.author_id}</span>
+                                    )}
                                 </div>
                                 <div className="form-control mb-2">
                                     <label htmlFor="">การแสดงผล</label>
@@ -174,12 +190,16 @@ const PostForm = () => {
                                             <option value="1">เนื้อหา</option>
                                             <option value="2">ไฟล์ PDF</option>
                                             <option value="3">รูปภาพ</option>
+                                            <option value="4">วีดิโอ</option>
                                             {/* {formData?.authors?.map(author => (
                                                 <option key={author.id} value={author.id}>
                                                     {author.name}
                                                 </option>
                                             ))} */}
                                         </select>
+                                    )}
+                                    {(formik.errors.content_type_id && formik.touched.content_type_id) && (
+                                        <span className="text-red-500">{formik.errors.content_type_id}</span>
                                     )}
                                 </div>
                                 <div className="form-control mb-2">
@@ -197,6 +217,16 @@ const PostForm = () => {
                                             <img src={URL.createObjectURL(featuredImage)} />
                                         </div>
                                     )}
+                                </div>
+                                <div className="form-control mb-2">
+                                    <label htmlFor="">ลิงค์วีดิโอ</label>
+                                    <input
+                                        type="text"
+                                        name="urls"
+                                        value={formik.values.urls}
+                                        onChange={formik.handleChange}
+                                        className="file-input file-input-bordered w-full"
+                                    />
                                 </div>
                                 <div className="flex flex-row justify-end">
                                     <button
