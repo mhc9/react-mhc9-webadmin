@@ -22,6 +22,8 @@ const PostForm = () => {
     const [fullText, setFullText] = useState('');
     const [featuredImage, setFeaturedImage] = useState(null);
     const [publishUp, setPublishUp] = useState(moment());
+    const [publishDown, setPublishDown] = useState(moment());
+    const [pdfFile, setPdfFile] = useState(null);
 
     const handleFullTextChange = (formik, content) => {
         console.log(content);
@@ -42,11 +44,12 @@ const PostForm = () => {
                 content_type_id: '1',
                 category_id: '',
                 author_id: '',
-                featured: '',
                 publish_up: moment().format('YYYY-MM-DDTHH:mm:ss'),
                 publish_down: '',
-                tags: '',
+                featured: '',
                 urls: '',
+                tags: '',
+                pdf: '',
             }}
             validationSchema={contentSchema}
             onSubmit={handleSubmit}
@@ -218,16 +221,36 @@ const PostForm = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="form-control mb-2">
-                                    <label htmlFor="">ลิงค์วีดิโอ</label>
-                                    <input
-                                        type="text"
-                                        name="urls"
-                                        value={formik.values.urls}
-                                        onChange={formik.handleChange}
-                                        className="file-input file-input-bordered w-full"
-                                    />
-                                </div>
+                                {formik.values.content_type_id === '4' && (
+                                    <div className="form-control mb-2">
+                                        <label htmlFor="">ลิงค์วีดิโอ</label>
+                                        <input
+                                            type="text"
+                                            name="urls"
+                                            value={formik.values.urls}
+                                            onChange={formik.handleChange}
+                                            className="file-input file-input-bordered w-full"
+                                        />
+                                    </div>
+                                )}
+                                {formik.values.content_type_id === '2' && (
+                                    <div className="form-control mb-2">
+                                        <label htmlFor="">ไฟล์ Pdf</label>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => {
+                                                setPdfFile(e.target.files[0]);
+                                                formik.setFieldValue('pdf', e.target.files[0]);
+                                            }}
+                                            className="file-input file-input-bordered w-full"
+                                        />
+                                        {pdfFile && (
+                                            <div className="border m-1 overflow-hidden rounded-md">
+                                                {pdfFile?.name}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                                 <div className="flex flex-row justify-end">
                                     <button
                                         type="submit"
