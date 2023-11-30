@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPosts } from '../../slices/postSlice' 
+import { getPosts, destroy } from '../../slices/postSlice' 
 
 const PostList = () => {
     const dispatch = useDispatch();
@@ -52,12 +52,12 @@ const PostList = () => {
                                 <td className="text-center">{post.category?.name}</td>
                                 <td className="text-center">{post.publish_up}</td>
                                 <td className="text-center">
-                                    <Link className="btn btn-warning btn-sm px-2 mr-1">
+                                    <Link to={`/posts/${post.id}`} className="btn btn-warning btn-sm px-2 mr-1">
                                         <i className="fas fa-edit"></i>
                                     </Link>
-                                    <Link className="btn btn-error btn-sm px-2">
+                                    <button type="button" className="btn btn-error btn-sm px-2" onClick={() => dispatch(destroy(post?.id))}>
                                         <i className="fas fa-trash-alt"></i>
-                                    </Link>
+                                    </button>
                                 </td>
                             </tr>
                         ))}
