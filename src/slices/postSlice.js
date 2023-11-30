@@ -42,6 +42,16 @@ export const store = createAsyncThunk("post/store", async (data, { rejectWithVal
     }
 });
 
+export const destroy = createAsyncThunk("post/destroy", async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/posts/${id}`);
+    
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
 export const postSlice = createSlice({
     name: 'post',
     initialState,
@@ -96,6 +106,23 @@ export const postSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
+            state.error = payload;
+        },
+        [destroy.pending]: (state) => {
+            state.success = false;
+            state.error = null;
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload;
+
+            if (status === 1) {
+                state.success = true;
+            } else {
+                state.success = false;
+                state.error = { message };
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
             state.error = payload;
         },
     }
