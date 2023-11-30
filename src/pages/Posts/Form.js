@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import ReactQuill from 'react-quill'
 import { convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import { DatePicker } from '@mui/x-date-pickers'
-import { useGetInitialFormDataQuery } from '../../services/postApi/postApi'
-import DotLoading from '../../components/Loadings/DotLoading'
 import moment from 'moment/moment'
 import { store } from '../../slices/postSlice'
+import { useGetInitialFormDataQuery } from '../../services/postApi/postApi'
+import DotLoading from '../../components/Loadings/DotLoading'
 import 'react-quill/dist/quill.snow.css'
-import { useDispatch } from 'react-redux'
 
 const contentSchema = Yup.object().shape({
 
@@ -45,7 +45,7 @@ const PostForm = () => {
                 category_id: '',
                 author_id: '',
                 publish_up: moment().format('YYYY-MM-DDTHH:mm:ss'),
-                publish_down: '',
+                publish_down: moment().format('YYYY-MM-DDTHH:mm:ss'),
                 featured: '',
                 urls: '',
                 tags: '',
@@ -133,6 +133,25 @@ const PostForm = () => {
                                     />
                                     {(formik.errors.publish_up && formik.touched.publish_up) && (
                                         <span className="text-red-500">{formik.errors.publish_up}</span>
+                                    )}
+                                </div>
+                                <div className="form-control mb-2">
+                                    <label htmlFor="">ถึงวันที่</label>
+                                    <DatePicker
+                                        format="DD/MM/YYYY"
+                                        value={publishDown}
+                                        onChange={(date) => {
+                                            setPublishDown(date);
+                                            formik.setFieldValue('publish_down', date.format('YYYY-MM-DDTHH:mm:ss'));
+                                        }}
+                                        sx={{
+                                            '& .MuiInputBase-root.MuiOutlinedInput-root': {
+                                                border: `${(formik.errors.publish_down && formik.touched.publish_down) ? '1px solid red' : 'inherit'}`,
+                                            }
+                                        }}
+                                    />
+                                    {(formik.errors.publish_down && formik.touched.publish_down) && (
+                                        <span className="text-red-500">{formik.errors.publish_down}</span>
                                     )}
                                 </div>
                                 <div className="form-control mb-2">
@@ -245,7 +264,8 @@ const PostForm = () => {
                                             className="file-input file-input-bordered w-full"
                                         />
                                         {pdfFile && (
-                                            <div className="border m-1 overflow-hidden rounded-md">
+                                            <div className="m-1 overflow-hidden rounded-md font-thin text-blue-500">
+                                                <i className="far fa-file-pdf mr-1"></i>
                                                 {pdfFile?.name}
                                             </div>
                                         )}
