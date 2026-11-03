@@ -33,7 +33,7 @@ export const getPost = createAsyncThunk("post/getPost", async (id, { rejectWithV
 export const store = createAsyncThunk("post/store", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/posts', data, {
-            headers: { "Content-Type": "multipart/form-data" }
+            headers: { 'Accept': 'application/json' }
         });
     
         return res.data;

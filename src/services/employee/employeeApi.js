@@ -1,26 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from '../baseApi';
 
-export const employeeApi = createApi({
-    reducerPath: 'employeeApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: process.env.REACT_APP_API_URL,
-        prepareHeaders: (headers, { getState }) => {
-            const token = localStorage.getItem("access_token");
-
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-
-                return headers;
-            }
-        },
-    }),
+export const employeeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getInitialFormData: builder.query({
+        getPostInitialFormData: builder.query({
             query: () => ({
                 url: '/api/employees/init/form'
             }),
         }),
     }),
+    overrideExisting: false, // Prevents accidental overwrites in HMR/tests
 });
 
-export const { useGetInitialFormDataQuery } = employeeApi;
+export const { useGetEmployeeInitialFormDataQuery } = employeeApi;

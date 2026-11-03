@@ -8,7 +8,7 @@ import draftToHtml from 'draftjs-to-html'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment/moment'
 import { store } from '../../slices/postSlice'
-import { useGetInitialFormDataQuery } from '../../services/postApi/postApi'
+import { useGetPostInitialFormDataQuery } from '../../services/postApi/postApi'
 import DotLoading from '../../components/Loadings/DotLoading'
 import 'react-quill/dist/quill.snow.css'
 
@@ -18,7 +18,7 @@ const contentSchema = Yup.object().shape({
 
 const PostForm = () => {
     const dispatch = useDispatch();
-    const { data: formData, isLoading } = useGetInitialFormDataQuery();
+    const { data: formData, isLoading } = useGetPostInitialFormDataQuery();
     const [fullText, setFullText] = useState('');
     const [featuredImage, setFeaturedImage] = useState(null);
     const [publishUp, setPublishUp] = useState(moment());
@@ -32,7 +32,21 @@ const PostForm = () => {
     };
 
     const handleSubmit = (values, formik) => {
-        dispatch(store(values));
+        const formData = new FormData()
+        formData.append('title', values.title);
+        formData.append('intro_text', values.intro_text);
+        formData.append('full_text', values.full_text);
+        formData.append('category_id', values.category_id);
+        formData.append('content_type_id', values.content_type_id);
+        formData.append('author_id', values.author_id);
+        formData.append('publish_up', values.publish_up);
+        formData.append('publish_down', values.publish_down);
+        formData.append('tags', values.tags);
+        formData.append('featured', featuredImage);
+        formData.append('pdf', pdfFile);
+        formData.append('urls', values.urls);
+
+        dispatch(store(formData));
     };
 
     return (

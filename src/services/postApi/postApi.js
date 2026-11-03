@@ -1,26 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from '../baseApi';
 
-export const postApi = createApi({
-    reducerPath: 'postApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: process.env.REACT_APP_API_URL,
-        prepareHeaders: (headers, { getState }) => {
-            const token = localStorage.getItem("access_token");
-
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-
-                return headers;
-            }
-        },
-    }),
+export const postApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getInitialFormData: builder.query({
+        getPostInitialFormData: builder.query({
             query: () => ({
                 url: '/api/posts/init/form'
             }),
         }),
     }),
+    overrideExisting: false, // Prevents accidental overwrites in HMR/tests
 });
 
-export const { useGetInitialFormDataQuery } = postApi;
+export const { useGetPostInitialFormDataQuery } = postApi;
